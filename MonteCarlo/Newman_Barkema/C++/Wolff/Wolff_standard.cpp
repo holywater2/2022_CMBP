@@ -4,16 +4,17 @@
 #include <iostream>
 #include <iomanip>
 
-const int kL = 100; /*Parameter: lattice size*/
+const int kL = 24; /*Parameter: lattice size*/
 const int kN = kL*kL;
-const int kBin = 25; /*Parametr: Change binning of temperature*/
+const int kBin = 50; /*Parametr: Change binning of temperature*/
 const int kB = 0;
 const int kJ = 1;
 
 // T_crit ~ 2.269
-const double Tsrt = 2.200;
-const double Tfin = 2.350;
-
+// const double Tsrt = T_CRIT*(1-0.08);
+// const double Tfin = T_CRIT*(1+0.08);
+const double Tsrt = 2.0;
+const double Tfin = 2.6;
 double isTinf = false;
 
 #ifdef _WIN32
@@ -23,6 +24,7 @@ static string kFilename = ".\\Result\\Wolff_c_"+to_string(kL)+"_int"+to_string(k
 static string kFilename = "./Result/Wolff_c_"+to_string(kL)+"_int"+to_string(kBin);
 #endif //linux
 
+typedef Wolff_2D Model;
 
 vector<double> args = {kL,kBin,kB,kJ,Tsrt,Tfin,isTinf};
 
@@ -31,7 +33,7 @@ clock_t __start__, __finish__;
 void Greetings(){
     string Tat = isTinf ? "inf" : "0";
 
-    cout << "Wolff Algorithm\n";
+    cout << Model::Name() + " Algorithm\n";
     cout << "Radnomness test(seed): " << seed << '\n';
     cout << "L = " << kL << ", " << "bin = " << kBin << ", Start T at " << Tat << "\n";
     cout << "------------------------------------------------------------------------------------------------------------------" << "\n";
@@ -44,17 +46,17 @@ void Greetings(){
 
 void Farewell(int N = 0){
     __finish__ = clock();
-    if(!N)
+    if(N)
         cout << "\nProgram Abonormally Exit. Spent time: " << (double)(__finish__-__start__)/CLOCKS_PER_SEC << "\n";
     else
-        cout << "Program Exit Exit. Spent time: " << (double)(__finish__-__start__)/CLOCKS_PER_SEC << "\n";
+        cout << "Program Exit. Spent time: " << (double)(__finish__-__start__)/CLOCKS_PER_SEC << "\n";
     cout << "-------------------------------------------------------------------------------------------\n";
 }
 
 void handler(int A)
 {
     cout << endl;
-    Farewell();
+    Farewell(1);
     exit(A);
 }
 
@@ -63,7 +65,7 @@ int main(){
     signal(SIGINT, &handler);
     Greetings();
     
-    for(int gg = 0; gg < 8; gg++){
+    for(int gg = 0; gg < 1; gg++){
         Model model = Model(args);
         Writer modelW = Writer(kFilename+"final");
         modelW.WriteLine("idx,temperture,magnetization,specific heat,abs(sigma),sigma**2,sigma**4,HH,HH**2,m_error\n");

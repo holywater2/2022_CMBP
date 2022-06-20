@@ -1,0 +1,14 @@
+kL      = 10
+kBin    = 30
+kB      = 0
+kJ      = 1
+alpha   = 4
+
+Tsrt = 6
+Tfin = 9
+
+isTinf = 0
+Random = 0
+
+equil_time_base = 100
+mcs = 1000

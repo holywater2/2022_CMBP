@@ -1,0 +1,16 @@
+2022.02.24
+2D Ising model에서 Swendsen-Wang Algorithm을 HK(Hoshen–Kopelman algorithm) clustering을 이용하여서 구현에 성공하였다
+
+---
+첫 번째 시도로는 Wolff Algorithm을 그대로 응용하여서 모든 점에서 Wolff cluster를 구현하는 방식으로 만들려고 했다.
+하지만 이는 실패로 돌아갔다. 어떤 물리적인 이유에 의해서 코드의 Wolff의 Queue(혹은 Stack) 을 응용한 visiting 방식이 먹히지
+않은 것인지 모르겠다. 아마도 Wolff 구현 방식에서는 한 번 방문된 site를 중복해서 여러번 방문해서 cluster에 넣을려는 시도가 있을 수 있는데
+(ex 도넛형을 생각해보라 도넛의 중심은 2D에서 최대 4번까지 bonding 시도가 생긴다), 이것이 SW의 구현과 다른 접근이라고 생각이 되었다.
+
+그래서 추가적으로 구현을 한게 visited list였고 이를 통해서 중복된 bonding 시도를 없애려고 했지만, 이 또한 원하는 결과와 약간 다른 모습을 보여주었다.
+
+두 번째 시도는 책에서 추천하는 HK 방식으로 cluster를 만들어서 라벨링하고 뒤집는 것이었다.
+위에 방식과는 일단 다른 것이 각 site에서 bond check를 한 번씩만 하도록 설계하였다는 것이다.
+그리고 나서 bond check를 탐색해가면서 cluster를 확인한다.. 끝
+구현에서 문제가 있었던 것은 크게 HK 방식을 bonding을 check하는 알고리즘으로 바꾼 것
+그리고 makebond function에 값을 하나 잘 못 집어 넣은 것이었다..

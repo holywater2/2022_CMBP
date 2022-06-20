@@ -32,7 +32,7 @@ const double T_CRIT = 2.269185;
 
 typedef tuple<int,int> duo;
 
-class Model{ 
+class Wolff_2D{ 
     public:
         const int L;
         const int N;
@@ -67,9 +67,10 @@ class Model{
         unsigned long Total_Step  = 0;
         unsigned long Calc_call = 0;
 
-        Model(int L, int bin, double B, double J, double Tsrt, double Tfin, bool isTinf);
-        Model(vector<double> args);
-        ~Model(){
+        static string Name(){return "Wolff";}
+        Wolff_2D(int L, int bin, double B, double J, double Tsrt, double Tfin, bool isTinf);
+        Wolff_2D(vector<double> args);
+        ~Wolff_2D(){
             __finish__ = clock();
             cout << "------------------------------------------------------------------------------------------------------------------\n";
             cout << "Model calculation finished. Spent time: " << (double)(__finish__-__start__)/CLOCKS_PER_SEC << "\n";
@@ -86,7 +87,7 @@ class Model{
         void IterateUntilEquilibrium(int equil_time);
 };
 
-Model::Model(int L, int bin, double B, double J, double Tsrt, double Tfin, bool isTinf) :L(L), N(L*L), Bin(bin), B(B), J(J), YNN(L){
+Wolff_2D::Wolff_2D(int L, int bin, double B, double J, double Tsrt, double Tfin, bool isTinf) :L(L), N(L*L), Bin(bin), B(B), J(J), YNN(L){
     this-> isTinf = isTinf;
     this-> sc = new short[N];
 
@@ -109,13 +110,13 @@ Model::Model(int L, int bin, double B, double J, double Tsrt, double Tfin, bool 
     }
 }
 
-Model::Model(vector<double> args): Model(args[0],args[1],args[2],args[3],args[4],args[5],args[6]){}
+Wolff_2D::Wolff_2D(vector<double> args): Wolff_2D(args[0],args[1],args[2],args[3],args[4],args[5],args[6]){}
 
-void Model::ProbCalc(double beta){
+void Wolff_2D::ProbCalc(double beta){
     this->prob = 1-exp(-2*beta*J);
 }
 
-void Model::Initialize(double beta){
+void Wolff_2D::Initialize(double beta){
     this-> Calc_call = 0;
     this-> Fliped_Step = 0;
     this-> Total_Step = 0;
@@ -131,7 +132,7 @@ void Model::Initialize(double beta){
 
 }
 
-int Model::SweepHelical(int i){
+int Wolff_2D::SweepHelical(int i){
     int nn, sum = 0;
     // int XNN = 1, YNN = L;
 
@@ -147,7 +148,7 @@ int Model::SweepHelical(int i){
     return sum;
 }
 
-int Model::BoundaryHelical(int i){
+int Wolff_2D::BoundaryHelical(int i){
     int nn, sum = 0;
     // int XNN = 1, YNN = L;
     
@@ -159,7 +160,7 @@ int Model::BoundaryHelical(int i){
     return sum;
 }
 
-duo Model::Measure(){
+duo Wolff_2D::Measure(){
     int i, sum, HH;
     int res = 0, sigma = 0;
     for(i = 0; i < N; i++){
@@ -173,7 +174,7 @@ duo Model::Measure(){
     return make_tuple(HH,sigma);
 }
 
-// void Model::Calculate(int _n){
+// void Wolff_2D::Calculate(int _n){
 //     int i, k, delta, n;
 //     n = !_n ? (this->N) : _n;
 //     double a;
@@ -198,7 +199,7 @@ duo Model::Measure(){
 //     }
 // }
 
-int Model::Calculate(){
+int Wolff_2D::Calculate(){
     /*In Wolff algorithm, each clustering and flipping process is one mcs*/
     int i, k, l, sp, cur, size = 0;
     short snew, sold;
@@ -239,7 +240,7 @@ int Model::Calculate(){
     return size;
 }
 
-int Model::Calculate(int site){
+int Wolff_2D::Calculate(int site){
     /*In Wolff algorithm, each clustering and flipping process is one mcs*/
     int i, k, l, sp, cur, size = 0;
     short snew, sold;
@@ -282,7 +283,7 @@ int Model::Calculate(int site){
 }
 
 
-void Model::IterateUntilEquilibrium(int equil_time){
+void Wolff_2D::IterateUntilEquilibrium(int equil_time){
     double k = 0;
     while(k < equil_time){
         k += Calculate()/(double)N;
