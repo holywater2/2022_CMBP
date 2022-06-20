@@ -31,7 +31,7 @@ const double T_CRIT = 2.269185;
 
 typedef tuple<int,int> duo;
 
-class Model{
+class Metropolis_2D{
     public:
         const int L;
         const int N;
@@ -68,9 +68,10 @@ class Model{
         long Total_Step  = 0;
         long Calc_call = 0;
 
-        Model(int L, int bin, int B, int J, int Tsrt, int Tfin, bool isTinf);
-        Model(vector<double> args);
-        ~Model(){
+        static string Name(){return "Metropolis";}
+        Metropolis_2D(int L, int bin, int B, int J, double Tsrt, double Tfin, bool isTinf);
+        Metropolis_2D(vector<double> args);
+        ~Metropolis_2D(){
             __finish__ = clock();
             cout << "------------------------------------------------------------------------------------------------------------------\n";
             cout << "Model calculation finished. Spent time: " << (double)(__finish__-__start__)/CLOCKS_PER_SEC << "\n";
@@ -87,7 +88,8 @@ class Model{
         void IterateUntilEquilibrium(int equil_time,bool random = true);
 };
 
-Model::Model(int L, int bin, int B, int J, int Tsrt, int Tfin, bool isTinf) :L(L), N(L*L), Bin(bin), B(B), J(J), YNN(L){
+Metropolis_2D::Metropolis_2D(int L, int bin, int B, int J, double Tsrt, double Tfin, bool isTinf)
+:L(L), N(L*L), Bin(bin), B(B), J(J), YNN(L) {
     this-> isTinf = isTinf;
     this-> sc = new short[N];
 
@@ -110,15 +112,15 @@ Model::Model(int L, int bin, int B, int J, int Tsrt, int Tfin, bool isTinf) :L(L
     }
 }
 
-Model::Model(vector<double> args): Model(args[0],args[1],args[2],args[3],args[4],args[5],args[6]){}
+Metropolis_2D::Metropolis_2D(vector<double> args): Metropolis_2D(args[0],args[1],args[2],args[3],args[4],args[5],args[6]){}
 
-void Model::ProbCalc(double beta){
+void Metropolis_2D::ProbCalc(double beta){
     for(int i = 2; i < 5; i += 2){
         this->prob[i] = exp(-2*beta*i);
     }
 }
 
-void Model::Initialize(double beta){
+void Metropolis_2D::Initialize(double beta){
     this-> Calc_call = 0;
     this-> Fliped_Step = 0;
     this-> Total_Step = 0;
@@ -135,7 +137,7 @@ void Model::Initialize(double beta){
     this->Measure();
 }
 
-int Model::SweepHelical(int i){
+int Metropolis_2D::SweepHelical(int i){
     int nn, sum = 0;
     // int XNN = 1, YNN = L;
 
@@ -151,7 +153,7 @@ int Model::SweepHelical(int i){
     return sum;
 }
 
-int Model::BoundaryHelical(int i){
+int Metropolis_2D::BoundaryHelical(int i){
     int nn, sum = 0;
     // int XNN = 1, YNN = L;
     
@@ -163,11 +165,12 @@ int Model::BoundaryHelical(int i){
     return sum;
 }
 
-duo Model::Measure(){
+duo Metropolis_2D::Measure(){
     int i, sum, HH;
     int res = 0, sigma = 0;
     for(i = 0; i < N; i++){
         sum = this->BoundaryHelical(i);
+        // cout << i << ' ' << sum << '\n';
         res += J*sum*sc[i];
         sigma += sc[i];
     }
@@ -179,12 +182,12 @@ duo Model::Measure(){
     return make_tuple(HH,sigma);
 }
 
-duo Model::Measure_fast(){
+duo Metropolis_2D::Measure_fast(){
     return make_tuple(this->HH,this->sigma);
 }
 
 
-void Model::Calculate(int _n, bool Random){
+void Metropolis_2D::Calculate(int _n, bool Random){
     int i, k, delta, n;
     n = !_n ? (this->N) : _n;
     double a;
@@ -214,7 +217,7 @@ void Model::Calculate(int _n, bool Random){
     }
 }
 
-void Model::IterateUntilEquilibrium(int equil_time,bool random){
+void Metropolis_2D::IterateUntilEquilibrium(int equil_time,bool random){
     for(int j = 0; j < equil_time; j++)
         Calculate(0,random);
 }

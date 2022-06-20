@@ -22,6 +22,7 @@ static string kFilename = ".\\Result\\Metropolis_c_Error_"+to_string(kL)+"_int"+
 static string kFilename = "./Result/Metropolis_c_Error_"+to_string(kL)+"_int"+to_string(kBin);
 #endif
 
+typedef Metropolis_2D Model;
 
 vector<double> args = {kL,kBin,kB,kJ,Tsrt,Tfin,isTinf};
 

@@ -14,3 +14,6 @@
 *.csv
 !/MonteCarlo/Newman_Barkema/*/*/Result/*/*.csv
 !/MonteCarlo/Newman_Barkema/*/Result/*/*.csv
+
+# Header
+/MonteCarlo/headers/boost_1_78_0
