@@ -1,0 +1,1 @@
+./AA_Metropolis_standard.out ./Input/0702_6/data1.txt; ./AA_Metropolis_standard.out ./Input/0702_6/data2.txt; ./AA_Metropolis_standard.out ./Input/0702_6/data3.txt; ./AA_Metropolis_standard.out ./Input/0702_6/data4.txt; ./AA_Metropolis_standard.out ./Input/0702_6/data5.txt;

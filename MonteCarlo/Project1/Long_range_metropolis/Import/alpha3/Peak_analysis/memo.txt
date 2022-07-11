@@ -1,0 +1,11 @@
+8 4.5-6.5
+12 5.5-7.5
+16 6-7.5
+
+Todo
+(sshk2)
+20 6.0-8.5
+32 6.0-8.5
+48 6.0-8.5
+
+specific heat과 susceptibility의 peak를 분석해서 power law를 찾아봄

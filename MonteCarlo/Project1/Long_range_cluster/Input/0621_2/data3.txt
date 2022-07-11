@@ -1,0 +1,19 @@
+kL      = 48
+kBin    = 31
+kB      = 0
+kJ      = 1
+alpha   = 4
+
+Tsrt = 3.5
+Tfin = 6
+
+isTinf = 0
+Random = 0
+
+equil_time_base = 128
+mcs = 16384
+***
+Horita pg.48
+
+8 16 32 64
+논문에서 제시하기를 mcs=16384면 충분하다.

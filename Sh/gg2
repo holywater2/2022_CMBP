@@ -1,0 +1,16 @@
+#!/bin/sh
+for name in "$@"
+do
+    case "$name" in
+    *.py)
+	python3 "$name"
+        ;;
+    *.cpp)
+        g++ -o $(basename "$name" .cpp).out "$name" -O3 -I/home/kss/include/boost_1_78_0 -L/home/kss/include/boost_1_78_0/stage/lib  &&
+	echo $(basename "$name" .cpp)" is compiled!"
+	;;
+    *)
+        echo "ignoring $name, since it is not one of my files!"
+        ;;
+    esac
+done  

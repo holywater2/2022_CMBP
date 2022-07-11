@@ -1,0 +1,17 @@
+#!/bin/sh
+#/mnt/c/Users/Seongsu/include
+for name in "$@"
+do
+    case "$name" in
+    *.py)
+	python3 "$name"
+        ;;
+    *.cpp)
+        g++ -o $(basename "$name" .cpp).out "$name" -O3 -I/mnt/c/Users/Seongsu/include/boost_1_78_0 -L/mnt/c/Users/Seongsu/include/boost_1_78_0/stage/lib && ./$(basename "$name" .cpp).out &&
+	echo $(basename "$name" .cpp)" is compiled and running!"
+	;;
+    *)
+        echo "ignoring $name, since it is not one of my files!"
+        ;;
+    esac
+done  

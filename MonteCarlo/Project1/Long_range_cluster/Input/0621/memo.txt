@@ -1,0 +1,3 @@
+0621
+나중에 졸논 쓸 때는 cluster 실험에서 쓴 가장 큰 lattice size의 autocorrelation time을 측정하여서
+Thermalization에 필요한 최소 tau (step)의 10배 값이 얼마인지를 측젇해야겠다.

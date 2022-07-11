@@ -1,0 +1,5 @@
+7.5부터 8.1까지 T 범위를 5e6을 목표로 계산
+L 8 16 (24) 32 48
+Binder ratio 계산이 목표
+
+계산 후 binder cumulant의 교점을 찾아서 그래프로 그림 -> power law fitting?

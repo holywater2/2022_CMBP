@@ -1,0 +1,18 @@
+kLx         = 64          
+kLy         = 64
+
+kBin        = 40
+
+kB       = 0
+kJx      = 1
+kJy      = -1
+alpha    = 1
+
+Tsrt = 0
+Tfin = 4
+
+isTinf = 0
+Random = 0
+
+equil_time_base = 10000
+mcs = 500000

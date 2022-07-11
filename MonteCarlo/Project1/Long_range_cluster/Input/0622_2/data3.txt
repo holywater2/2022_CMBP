@@ -1,0 +1,20 @@
+kL      = 48
+kBin    = 31
+kB      = 0
+kJ      = 1
+alpha   = 3.4
+
+Tsrt = 4.5
+Tfin = 7.5
+
+isTinf = 0
+Random = 0
+
+equil_time_base = 128
+mcs = 16384
+***
+Horita pg.48
+
+8 16 32 64
+논문에서 제시하기를 mcs=16384면 충분하다.
+alpha = 3.4일때 critical temp는 약 5.95 여기서 +- 1.5 구간 탐색
